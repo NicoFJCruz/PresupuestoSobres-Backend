@@ -1,40 +1,40 @@
 const db = require("../db");
-const users = require("./Users");
-const families = require("./Families");
-const envelopes = require("./Envelopes");
-const accounts = require("./Accounts");
-const transactions = require("./Transactions");
-const entities = require("./Entity");
+const Users = require("./Users");
+const Families = require("./Families");
+const Envelopes = require("./Envelopes");
+const Accounts = require("./Accounts");
+const Transactions = require("./Transactions");
+const Entities = require("./Entity");
 
 //Relation Family - User
-families.hasMany(users)
-users.belongsTo(families)
+Families.hasMany(Users)
+Users.belongsTo(Families)
 
 //Relation Family - Envelopes
-families.hasMany(envelopes)
-envelopes.belongsTo(families)
+Families.hasMany(Envelopes)
+Envelopes.belongsTo(Families)
 
 //Relation Family - Accounts
-families.hasMany(accounts)
-accounts.belongsTo(families)
+Families.hasMany(Accounts)
+Accounts.belongsTo(Families)
 
 //Relation Envelopes - Transactions
-envelopes.hasMany(transactions)
-transactions.belongsTo(envelopes)
+Envelopes.hasMany(Transactions)
+Transactions.belongsTo(Envelopes)
 
 //Relation Accounts - Transactions
-accounts.hasMany(transactions)
-transactions.belongsTo(accounts)
+Accounts.hasMany(Transactions)
+Transactions.belongsTo(Accounts)
 
 //Relation Entities - Transactions
-entities.hasMany(transactions)
-transactions.belongsTo(entities)
+Entities.hasMany(Transactions)
+Transactions.belongsTo(Entities)
 
 module.exports = {
-  users,
-  families,
-  entities,
-  envelopes,
-  accounts,
-  transactions,
+  Users,
+  Families,
+  Entities,
+  Envelopes,
+  Accounts,
+  Transactions,
 };
