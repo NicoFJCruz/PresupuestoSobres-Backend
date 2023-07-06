@@ -3,6 +3,31 @@ const { Users, Families } = require("../models");
 const Family = require("../models/Families");
 const { generateToken } = require("../tokens");
 
+const userAll = async (req, res, next) => {
+  try {
+    const users = await Users.findAll({ include: [{ model: Families }] });
+
+    res.send(users);
+  } catch (error) {
+    console.error(error);
+    next();
+  }
+};
+
+const userFamily = async (req, res, next) => {
+  try {
+    const users = await Users.findAll({
+      where: { familyId: req.params.familyId },
+      include: [{ model: Families }],
+    });
+
+    res.send(users);
+  } catch (error) {
+    console.error(error);
+    next();
+  }
+};
+
 const userRegister = async (req, res, next) => {
   try {
     const { family, ...userFields } = req.body;
@@ -69,4 +94,11 @@ const userLogout = async (req, res, next) => {
   }
 };
 
-module.exports = { userRegister, userLogin, userMe, userLogout };
+module.exports = {
+  userRegister,
+  userLogin,
+  userMe,
+  userLogout,
+  userAll,
+  userFamily,
+};
