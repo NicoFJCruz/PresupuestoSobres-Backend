@@ -30,18 +30,8 @@ const userFamily = async (req, res, next) => {
 const userRegister = async (req, res, next) => {
   try {
     const { family, ...userFields } = req.body;
-    const familyToSet = await Family.findByPk(family);
 
-    const [user, created] = await User.findOrCreate({
-      where: { email: userFields.email },
-      defaults: {
-        ...userFields,
-      },
-      include: [{ model: Family }],
-    });
-    if (created) {
-      await user.setFamilies(familyToSet);
-    }
+    const user = await User.create({ ...userFields, familyId: family });
 
     res.status(201).send(user);
   } catch (error) {
