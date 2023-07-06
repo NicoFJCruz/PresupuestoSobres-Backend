@@ -1,11 +1,10 @@
 const Sequelize = require("sequelize");
-const { Users, Families } = require("../models");
-const Family = require("../models/Families");
+const { User, Family } = require("../models");
 const { generateToken } = require("../tokens");
 
 const userAll = async (req, res, next) => {
   try {
-    const users = await Users.findAll({ include: [{ model: Families }] });
+    const users = await User.findAll({ include: [{ model: Family }] });
 
     res.send(users);
   } catch (error) {
@@ -16,7 +15,7 @@ const userAll = async (req, res, next) => {
 
 const userFamily = async (req, res, next) => {
   try {
-    const users = await Users.findAll({
+    const users = await User.findAll({
       where: { familyId: req.params.familyId },
       include: [{ model: Families }],
     });
@@ -31,9 +30,9 @@ const userFamily = async (req, res, next) => {
 const userRegister = async (req, res, next) => {
   try {
     const { family, ...userFields } = req.body;
-    const familyToSet = await Families.findByPk(family);
+    const familyToSet = await Family.findByPk(family);
 
-    const [user, created] = await Users.findOrCreate({
+    const [user, created] = await User.findOrCreate({
       where: { email: userFields.email },
       defaults: {
         ...userFields,
@@ -53,7 +52,7 @@ const userRegister = async (req, res, next) => {
 
 const userLogin = async (req, res, next) => {
   try {
-    const userExists = await Users.findByEmail(req.body.email);
+    const userExists = await User.findByEmail(req.body.email);
     if (!userExists) {
       return res.status(404).send("Usuario no existente");
     }
