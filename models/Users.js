@@ -22,7 +22,12 @@ User.init(
   {
     name: { type: S.STRING, allowNull: false },
     lastName: { type: S.STRING, allowNull: false },
-    email: { type: S.STRING, allowNull: false, validate: { isEmail: true } },
+    email: {
+      type: S.STRING,
+      allowNull: false,
+      unique: true,
+      validate: { isEmail: true },
+    },
     password: { type: S.STRING, allowNull: false },
     salt: { type: S.STRING },
     superAdmin: { type: S.BOOLEAN, defaultValue: false },
