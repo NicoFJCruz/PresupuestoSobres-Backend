@@ -1,23 +1,32 @@
 const Sequelize = require("sequelize");
-const { User, Family } = require("../models");
+const { Family } = require("../models");
 const { capitalizeWord } = require("../utils/capitalizeWord");
 const { generateHash } = require("../utils/hashFamily");
 
-const familyCreate = async (req, res, next) => {
+const familyAll = async (req, res, next) => {
   try {
-    const { lastname } = req.body;
-    const capitalize = capitalizeWord(lastname)
-    const hash = generateHash(capitalize)
+    const families = await Family.findAll();
 
-    const users = await Family.create({name: `${capitalize}_${hash}`});
-
-    res.send(users);
+    res.send(families);
   } catch (error) {
     console.error(error);
     next();
   }
 };
 
-module.exports = {
-    familyCreate,
+const familyCreate = async (req, res, next) => {
+  try {
+    const { lastname } = req.body;
+    const capitalize = capitalizeWord(lastname);
+    const hash = generateHash(capitalize);
+
+    const family = await Family.create({ name: `${capitalize}_${hash}` });
+
+    res.send(family);
+  } catch (error) {
+    console.error(error);
+    next();
+  }
 };
+
+module.exports = { familyCreate, familyAll };

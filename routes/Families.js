@@ -1,8 +1,8 @@
 const express = require("express");
 const familyRouter = express.Router();
-const { familyCreate } = require("../controllers/families");
-const { validateUser, validateFamilyAdmin } = require("../tokens/validation");
+const { familyCreate, familyAll } = require("../controllers/families");
 
+familyRouter.get("/", familyAll);
 familyRouter.post("/", familyCreate);
 
 module.exports = familyRouter;
