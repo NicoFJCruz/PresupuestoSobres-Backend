@@ -30,8 +30,10 @@ const userFamily = async (req, res, next) => {
 const userRegister = async (req, res, next) => {
   try {
     const { family, ...userFields } = req.body;
-
-    const user = await User.create({ ...userFields, familyId: family });
+    const familyToSet = await Family.findByPk(family);
+    
+    const user = await User.create(userFields);
+    await user.setFamily(familyToSet);
 
     res.status(201).send(user);
   } catch (error) {

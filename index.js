@@ -22,7 +22,7 @@ app.use(express.json());
 app.use(volleyball);
 app.use("/api", routes);
 
-db.sync({ force: false }).then(() => {
+db.sync({ force: true }).then(() => {
   console.log("DB connected");
 
   app.listen(PORT, () => {

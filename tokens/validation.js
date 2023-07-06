@@ -15,4 +15,9 @@ const validateFamilyAdmin = (req, res, next) => {
   next();
 };
 
+const validateSuperAdmin = (req, res, next) => {
+  if (!req.user.superAdmin) return res.sendStatus(401);
+  next();
+};
+
 module.exports = { validateUser, validateFamilyAdmin };
