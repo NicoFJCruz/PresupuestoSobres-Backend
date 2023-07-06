@@ -1,11 +1,15 @@
-const crypto = require('crypto');
+const crypto = require("crypto");
 
-const generateShortHash = (data) => {
-  const hash = crypto.createHash('md5').update(data).digest('base64');
-  return hash;
+const generateHash = (data) => {
+  const timestamp = Date.now().toString();
+
+  const hash = crypto
+    .createHash("md5")
+    .update(data + timestamp)
+    .digest("hex");
+  return hash.substring(0, 16);
 };
 
-const timestamp = Date.now().toString();
-const randomValue = "Cruz";
-
-console.log("HASH", generateShortHash(timestamp + randomValue));
+module.exports = {
+  generateHash,
+};
