@@ -20,4 +20,4 @@ const validateSuperAdmin = (req, res, next) => {
   next();
 };
 
-module.exports = { validateUser, validateFamilyAdmin };
+module.exports = { validateUser, validateFamilyAdmin, validateSuperAdmin };
