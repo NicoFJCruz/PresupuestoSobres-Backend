@@ -17,7 +17,7 @@ const userFamily = async (req, res, next) => {
   try {
     const users = await User.findAll({
       where: { familyId: req.params.familyId },
-      include: [{ model: Families }],
+      include: [{ model: Family }],
     });
 
     res.send(users);
