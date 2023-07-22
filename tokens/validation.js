@@ -2,6 +2,8 @@ const { validateToken } = require("./index");
 
 const validateUser = (req, res, next) => {
   let cookie = req.cookies.token;
+  if (!cookie) res.sendStatus(401);
+
   let { payload } = validateToken(cookie);
 
   req.user = payload;
