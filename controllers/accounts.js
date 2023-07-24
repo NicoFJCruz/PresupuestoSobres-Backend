@@ -13,6 +13,36 @@ const accountAll = async (req, res, next) => {
   }
 };
 
+const accountEdit = async (req, res, next) => {
+  try {
+    const { type, amount } = req.body;
+    const { id } = req.params;
+    if (!amount) {
+      return res.status(400).send("Debe ingresar una cantidad.");
+    }
+
+    const account = await Account.findByPk(id);
+
+    if (!account) {
+      return res.status(404).send("Cuenta no encontrada");
+    }
+
+    if (type === "positive") {
+      account.amount = account.amount + amount;
+    }
+
+    if (type === "negative") {
+      account.amount = account.amount - amount;
+    }
+    account.save();
+    
+    res.send(account);
+  } catch (error) {
+    console.error(error);
+    next();
+  }
+};
+
 const accountCreate = async (req, res, next) => {
   try {
     let { name, amount } = req.body;
@@ -43,4 +73,4 @@ const accountCreate = async (req, res, next) => {
   }
 };
 
-module.exports = { accountCreate, accountAll };
+module.exports = { accountCreate, accountAll, accountEdit };
