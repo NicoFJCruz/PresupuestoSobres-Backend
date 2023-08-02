@@ -13,6 +13,18 @@ const accountAll = async (req, res, next) => {
   }
 };
 
+const accountOne = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const account = await Account.findByPk(id, { include: { model: Family } });
+
+    res.send(account);
+  } catch (error) {
+    console.error(error);
+    next();
+  }
+};
+
 const accountEdit = async (req, res, next) => {
   try {
     const { type, amount } = req.body;
@@ -92,4 +104,4 @@ const accountDelete = async (req, res, next) => {
   }
 };
 
-module.exports = { accountCreate, accountAll, accountEdit, accountDelete };
+module.exports = { accountCreate, accountAll, accountEdit, accountDelete, accountOne };
