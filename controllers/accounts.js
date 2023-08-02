@@ -35,7 +35,7 @@ const accountEdit = async (req, res, next) => {
       account.amount = account.amount - amount;
     }
     account.save();
-    
+
     res.send(account);
   } catch (error) {
     console.error(error);
@@ -73,4 +73,23 @@ const accountCreate = async (req, res, next) => {
   }
 };
 
-module.exports = { accountCreate, accountAll, accountEdit };
+const accountDelete = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    const account = await Account.findByPk(id);
+
+    if (!account) {
+      return res.status(404).send("Cuenta no encontrada.");
+    }
+
+    account.destroy();
+
+    res.status(404).send(account);
+  } catch (error) {
+    console.error(error);
+    next();
+  }
+};
+
+module.exports = { accountCreate, accountAll, accountEdit, accountDelete };
